@@ -286,7 +286,7 @@ defmodule Nostrum.Cache.GuildCache.ETS do
     {_old, new, new_roles} = upsert(guild.roles, role.id, role, Role)
     new_guild = %{guild | roles: new_roles}
     true = :ets.update_element(@table_name, guild_id, {2, new_guild})
-    new
+    {guild_id, new}
   end
 
   @doc "Delete the given role from the given guild in the cache."
@@ -308,7 +308,7 @@ defmodule Nostrum.Cache.GuildCache.ETS do
     {old, new_role, new_roles} = upsert(guild.roles, role.id, role, Role)
     new_guild = %{guild | roles: new_roles}
     true = :ets.update_element(@table_name, guild_id, {2, new_guild})
-    {old, new_role}
+    {guild_id, new_role}
   end
 
   @doc "Update guild voice states with the given voice state in the cache."
